@@ -13,14 +13,11 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 
 public class App {
     public static void main( String[] args ) throws IOException {
-        /*
         if( args.length < 1 ) {
             System.err.println( "java -jar ra-1.0-SNAPSHOT.jar <path to property file" );
             return;
         }
-        */
-        args = new String[ 1 ];
-        args[0] = "/Users/rspamzn/Documents/DAML/Customers/Axiata/poc/app/resources/app.properties";
+        
         InputStream input = new FileInputStream( args[ 0 ] );
         Properties prop = new Properties();
         prop.load( input );
