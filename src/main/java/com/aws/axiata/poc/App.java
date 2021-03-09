@@ -41,6 +41,18 @@ public class App {
         for( int i=1; i<=numRecords; i++ ) {
             String msisdn = startIndex + String.format( strFormat, i );
             JsonObject record = new JsonObject();
+            //{ "msisdn": "2088aed6dcab216cdcc71", "session_start_timestamp": 1614477032000, "session_end_timestamp": 1614480632000, 
+            //"cell_id": "cell1", "lac_id": "lac1", "volume_uplink": 1234, 
+            //"volume_downlink": 234, "option_id": "pack1", "data_quota_balance": 8, 
+            //"data_quota_total": 100, "charge": 10, "event" : "cdr" }
+            int max = 9;
+            int min = 0; 
+            if( i>5 ) {
+                max = 10;
+                min = 100;
+            }
+            int range = max - min + 1;
+            double quotaBalance = (int)(Math.random() * range) + min;
             record.addProperty( "msisdn", msisdn );
             record.addProperty( "session_start_timestamp", new java.util.Date().getTime() );
             record.addProperty( "session_end_timestamp", new java.util.Date().getTime() + 10000 );
@@ -48,10 +60,11 @@ public class App {
             record.addProperty( "lac_id", "12AB" );
             record.addProperty( "volume_uplink", 234 );
             record.addProperty( "volume_downlink", 3244 );
-            record.addProperty( "option_id", "package1233" );
-            record.addProperty( "data_quota_balance", 3244 );
-            record.addProperty( "data_quota_total", 56000000 );
+            record.addProperty( "option_id", "just4ME" );
+            record.addProperty( "data_quota_balance", quotaBalance );
+            record.addProperty( "data_quota_total", 100 );
             record.addProperty( "charge", 30 );
+            record.addProperty( "event", "cdr" );
 
             System.out.println( "Streaming Record : " + record.toString() );
             producer.send( new ProducerRecord<String, String>( topic, msisdn, record.toString() ) );
